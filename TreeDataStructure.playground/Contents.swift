@@ -1,11 +1,11 @@
 import Foundation
 
-class Node {
-    var value: String
+class Node<T> {
+    var value: T
     var children: [Node] = []
     weak var parent: Node?
     
-    init(value: String) {
+    init(value: T) {
         self.value = value
     }
     
@@ -61,3 +61,26 @@ extension Node: CustomStringConvertible {
         return text
     }
 }
+
+//SEARCH
+extension Node where T: Equatable {
+    func search(value: T) -> Node? {
+        if value == self.value {
+            return self
+        }
+        
+        for child in children {
+            if let found = child.search(value: value) {
+                return found
+            }
+        }
+        return nil
+    }
+}
+
+beverages.search(value: "cocoa")
+beverages.search(value: "oolong")
+let nodeNumber = Node(value: 5)
+nodeNumber.search(value: 3)
+
+
