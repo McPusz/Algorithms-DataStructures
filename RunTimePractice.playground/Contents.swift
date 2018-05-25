@@ -33,13 +33,27 @@ func findNumsOfRepetitions(in string: String, searchChar: Character) -> Int {
     return sum
 }
 
-func findNumsOfRepetitionV2(in string: String, searchChars: [Character]) -> [Int] {
+//O(n*m)
+func findNumsOfRepetitionV1(in string: String, searchChars: [Character]) -> [Int] {
     var sums: [Int] = Array(repeating: 0, count: searchChars.count)
     for sChar in string {
         for (index, character) in searchChars.enumerated() {
             if sChar == character {
                 sums[index] += 1
             }
+        }
+    }
+    return sums
+}
+
+//O(n)
+func findNumsOfRepetitionV2(in string: String, searchChars: [Character]) -> [Int] {
+    var sums: [Int] = Array(repeating: 0, count: searchChars.count)
+    var charDict = [Character: Int]()
+    
+    for sChar in string {
+        if charDict[sChar] == nil {
+            
         }
     }
     return sums
