@@ -12,6 +12,7 @@ func executionTime(block measuredMethod: () -> ()) -> TimeInterval {
 // FUNCTIONS
 
 let char: Character = "Ш"
+let chars: [Character] = ["o", "a", "л"]
 let text = """
 Што й па мору, Што й па мору
 Што й па мору, мору сіняму
@@ -21,7 +22,7 @@ let text = """
 Там плавала стада Белых лебядзей
 Там плавала стада Белых лебядзей
 """
-
+// O(n)
 func findNumsOfRepetitions(in string: String, searchChar: Character) -> Int {
     var sum = 0
     
@@ -46,23 +47,37 @@ func findNumsOfRepetitionV1(in string: String, searchChars: [Character]) -> [Int
     return sums
 }
 
-//O(n)
+//O(n+m)
 func findNumsOfRepetitionV2(in string: String, searchChars: [Character]) -> [Int] {
     var sums: [Int] = Array(repeating: 0, count: searchChars.count)
     var charDict = [Character: Int]()
     
-    for sChar in string {
-        if charDict[sChar] == nil {
-            
+    for char in string {
+        if !charDict.keys.contains(char) {
+            charDict[char] = 1
+        } else {
+            charDict[char]! += 1
         }
     }
+    
+    for (index, char) in searchChars.enumerated() {
+        if !charDict.keys.contains(char) {
+            sums[index] = 0
+        } else {
+            sums[index] = charDict[char]!
+        }
+    }
+    
     return sums
 }
-
-let funcV1Time = executionTime {
+let funcTime = executionTime {
     _ = findNumsOfRepetitions(in: text, searchChar: char)
 }
 
+let funcV1Time = executionTime {
+    _ = findNumsOfRepetitionV1(in: text, searchChars: chars)
+}
+
 let funcV2Time = executionTime {
-    _ = findNumsOfRepetitionV2(in: text, searchChars: ["o", "a", "л"])
+    _ = findNumsOfRepetitionV2(in: text, searchChars: chars)
 }
